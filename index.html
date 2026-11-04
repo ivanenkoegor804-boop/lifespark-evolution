@@ -4,19 +4,76 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>LifeSpark: Evolution</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
-    * { margin: 0; padding: 0; box-sizing: border-box; touch-action: manipulation; }
-    html, body {
-      background: #0a0f1a; color: #e8f0e8; font-family: 'Nunito', system-ui, sans-serif;
-      overflow: hidden; height: 100%; width: 100%; position: fixed;
-      user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
-      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <p style="color:#aaa;padding:40px;text-align:center">Перенаправление на полную версию...</p>
-  <script>location.href='https://ivanenkoegor804-boop.github.io/lifespark-evolution/';</script>
+  <div id="game-container">
+    <div id="left-panel">
+      <div class="panel-header"><span>🧬</span> Мутации и Эволюция <span style="margin-left:auto;cursor:pointer;font-size:18px;opacity:0.7" id="close-left">✕</span></div>
+      <div id="upgrades-list"></div>
+    </div>
+    <div id="center">
+      <div id="canvas-wrap">
+        <canvas id="c"></canvas>
+        <div id="hud">
+          <div class="resource-block">
+            <div class="resource-label">Биомасса</div>
+            <div class="resource-value" id="biomass-val">0</div>
+            <div class="resource-rate" id="biomass-rate">+0/с</div>
+          </div>
+          <div id="era-badge">Первобытный Океан</div>
+          <div class="resource-block" style="text-align:right">
+            <div class="resource-label">ДНК</div>
+            <div class="resource-value" id="dna-val">0</div>
+            <div class="resource-rate" id="complexity-val">Сложность: 1</div>
+          </div>
+        </div>
+        <div id="click-hint">Кликай по ядру жизни ✨</div>
+      </div>
+      <div id="mobile-tabs">
+        <button class="mobile-tab-btn" id="mob-upgrades">🧬 Мутации</button>
+        <button class="mobile-tab-btn" id="mob-creatures">🦋 Существа</button>
+      </div>
+      <div id="bottom-bar">
+        <button class="action-btn" id="btn-burst" title="Всплеск мутаций">⚡ Всплеск</button>
+        <button class="action-btn special" id="btn-photo" title="Фотосинтез">🌿 Фотосинтез</button>
+        <button class="action-btn" id="btn-save">💾 Сохранить</button>
+        <button class="action-btn danger" id="btn-prestige" title="Великое Вымирание">☄️ Вымирание</button>
+      </div>
+    </div>
+    <div id="panel-backdrop"></div>
+    <div id="right-panel">
+      <div class="panel-header" style="display:none" id="right-close-header"><span>🦋</span> Меню <span style="margin-left:auto;cursor:pointer;font-size:18px;opacity:0.7" id="close-right">✕</span></div>
+      <div class="tabs">
+        <button class="tab active" data-tab="creatures">Существа</button>
+        <button class="tab" data-tab="achievements">Достижения</button>
+        <button class="tab" data-tab="stats">Статы</button>
+      </div>
+      <div class="tab-content active" id="tab-creatures">
+        <div class="panel-header" style="border:none;padding-bottom:4px"><span>🦋</span> Коллекция жизни</div>
+        <div id="creatures-list"></div>
+      </div>
+      <div class="tab-content" id="tab-achievements">
+        <div class="panel-header" style="border:none;padding-bottom:4px"><span>🏆</span> Достижения</div>
+        <div id="achievements-list"></div>
+      </div>
+      <div class="tab-content" id="tab-stats">
+        <div class="panel-header" style="border:none;padding-bottom:4px"><span>📊</span> Статистика</div>
+        <div id="stats-content" style="padding:16px;font-size:13px;line-height:1.8;color:#8aba9a"></div>
+      </div>
+    </div>
+  </div>
+  <div id="toast"></div>
+  <div id="modal-overlay">
+    <div class="modal">
+      <h2 id="modal-title">Великое Вымирание</h2>
+      <p id="modal-text"></p>
+      <div class="modal-btns">
+        <button class="action-btn" id="modal-cancel">Отмена</button>
+        <button class="action-btn danger" id="modal-confirm">Подтвердить</button>
+      </div>
+    </div>
+  </div>
+<script src="game.js"></script>
 </body>
 </html>
